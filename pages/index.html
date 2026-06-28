@@ -2,22 +2,38 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0"
+    <meta name="viewport" content="width=device-width, initial-scale=0">
+    <title>Bem-vindo!</title>
+    <link rel="stylesheet" href="../css/index.css">
 </head>
-<body>
-    <h1>Seleção dos Estados Unidos</h1>
+<body onload="alerta()">
+
+    <div class="cabecalho">
+    <form action="./classificatórias.html"method="GET">
+
+    <header>
+    <h1 id="titulo-selecao" onmouseover="mudar_cor()" onmouseout="reseta_cor()" onclick="incentivo()">Seleção dos Estados Unidos</h1>
         <p>Rumo ao Hexa</p>
         <img src="https://jornaldacidadevalesdeminas.com/wp-content/uploads/2026/03/uSA-e1774858048441.jpg">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6-ummVE83c9izjiyDGrAGOgkWJLLuzFACuZiAn2Q9Sw&s=10">
+    </header>
+
+    <main>
+        <section class="informacao">
     <h2>História</h2>
         <p>A história da seleção dos Estados Unidos é marcada por feitos históricos no início do século XX, um longo período de esquecimento e um renascimento moderno impulsionado pela Copa de 1994, que consolidou o país como uma força competitiva e culminou no desenvolvimento de uma talentosa geração europeizada para a Copa de 2026.</p>
     <h2>Curiosidade</h2>
-       <p>O atacante da seleção americana Timothy Weah realizou o maior sonho de seu pai, o lendário ex-melhor do mundo George Weah, ao jogar e marcar um gol na Copa do Mundo, um feito que a lenda liberiana nunca conseguiu alcançar na carreira.</p>
-    
+        <p id="curiosidade-selecao" ondblclick="mudar_curiosidade()">O atacante da seleção americana Timothy Weah realizou o maior sonho de seu pai, o lendário ex-melhor do mundo George Weah, ao jogar e marcar um gol na Copa do Mundo, um feito que a lenda liberiana nunca conseguiu alcançar na carreira.</p>
+        </section>
+
+    <section class="titulos">
     <h2>Títulos</h2>
     <ul>
         <li>Copa Ouro da CONCACAF (Possui 7 títulos): <strong>1991, 2002, 2005, 2007, 2013, 2017, 2021</strong></li>
         <li>Liga das Nações da CONCACAF (Possui 3 títulos): <strong>2019-2020, 2022-2023, 2023-2024</strong></li>
     </ul>
+
+    <section class="jogadores">
     <h2>Jogadores e seus times atuais</h2>
       
     <ul>
@@ -52,5 +68,12 @@
          <li>"Haji Wright - <strong>Coventry City"</strong></li>
          <li>"Alejandro Zendejas - <strong>Club América"</strong></li>
     </ul>
+</section>
+</main>
+</div>
+
+    <button id="enviar" type="submit">Classificatórias</button>
+
 </body>
+</html>
 
