@@ -5,10 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=0">
     <title>Classificatórias</title>
     <link rel="stylesheet" href="../css/index.css">
+    <script src="../js/script.js"></script>
 </head>
 <body>
     <div class="tabela">
     <form action="./index.html"method="GET">
+    
+    <div class=Menu>
+        <li><a href="./index.html">Página Inicial</a></li>
+        <li><a href="./cadastro_torcedores.html">Cadastro de Torcedores</a></li>
+    </div>
+        
+
 
     <table border="1">
         <caption>Classificatórias Grupo C</caption>
@@ -22,33 +30,31 @@
 
         <tbody>
             <tr>
-                <td>Escócia</td>
+                <td id="escocia" onmousemove="mudar_cor1()" onmouseout="retornar_cor1()">Escócia</td>
                 <td>7</td>
                 <td>2</td>
             </tr>
 
             <tr>
-                <td>Brasil</td>
+                <td id="brasil" onmousemove="mudar_cor2()" onmouseout="retornar_cor2()">Brasil</td>
                 <td>5</td>
                 <td>1</td>
             </tr>
 
             <tr>
-                <td>Marrocos</td>
+                <td id="marrocos" onmousemove="mudar_cor3()" onmouseout="retornar_cor3()">Marrocos</td>
                 <td>4</td>
                 <td>1</td>
             </tr>
 
             <tr>
-                <td>Haiti</td>
+                <td id="haiti" onmousemove="mudar_cor4()" onmouseout="retornar_cor4()">Haiti</td>
                 <td>0</td>
                 <td>0</td>
             </tr>
         </tbody>    
     </table>
     </div>
-
-    <button id="enviar" type="submit">Voltar</button>
 
 </body>
 </html>

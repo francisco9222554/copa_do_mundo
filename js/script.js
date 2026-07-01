@@ -45,3 +45,36 @@ function aumentarImagem(elemento) {
 function restaurarImagem(elemento) {
     elemento.style.transform = "scale(1)";
 }
+
+//
+function mudar_cor1(){
+    document.getElementById("escocia").style.color="#23c145"
+}
+
+function mudar_cor2(){
+    document.getElementById("brasil").style.color="#23c145"
+}
+
+function mudar_cor3(){
+    document.getElementById("marrocos").style.color="#23c145"
+}
+
+function mudar_cor4(){
+    document.getElementById("haiti").style.color="#ff0000"
+}
+
+function retornar_cor1(){
+    document.getElementById("escocia").style.color="#ffffff"
+}
+
+function retornar_cor2(){
+    document.getElementById("brasil").style.color="#ffffff"
+}
+
+function retornar_cor3(){
+    document.getElementById("marrocos").style.color="#ffffff"
+}
+
+function retornar_cor4(){
+    document.getElementById("haiti").style.color="#ffffff"
+}
