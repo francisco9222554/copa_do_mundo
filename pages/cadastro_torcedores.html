@@ -9,33 +9,38 @@
 </head>
 <body>
 
+    <form action="./resultado.html">
+
     <div class="cadastro">
     <form>
 
     <div class=Menu>
         <li><a href="./../index.html">Página Inicial</a></li>
-        <li><a href="./classificatórias.html">Classificatórias</a></li>
+        <li><a href="../pages/classificatórias.html">Classificatórias</a></li>
     </div>
+
+    <button type="button" onclick="alternarTema()" id="tema">
+🌙 Tema Escuro
+</button>
 
     <div class="nome">
         <label class="textlabel">Nome:</label>
-        <input id="nome" class="campotexto" type="text" name="nome" placeholder="Nome completo" required></input>
+        <input id="nome" class="campotexto" type="text" name="nome" placeholder="Nome Completo" required onfocus="campoSelecionado()" onblur="campoNormal()" onkeyup="digitandoNome()">
     </div>
 
     <div class="nascimento">
-        <label class="textlabel">Data de nascimento:</label>
-        <Input id="email" class="campotexto" type="date" name="data_nascimento" placeholder="Data de nascimento" required></input>
+        <label class="textlabel">Data de Nascimento:</label>
+        <input id="data_nascimento" class="campotexto" type="date" name="data_nascimento" required>
     </div>
 
     <div class="email">
         <label class="textlabel">Email:</label>
-        <input id="senha"class="campotexto" type="email" name="email" placeholder="E-mail" required></input>
+        <input id="email" class="campotexto" type="email" name="email" placeholder="Insira seu email" required>
     </div>
 
     <div class="pais">
-        <label class="textlabel">Pais:</label>
-        <select class="campotexto" id="pais" name="pais" required>
-            <option value="brasil">Brasil</option>
+        <label class="selectlabel">País:</label>
+        <select id="select_pais" class="select" onchange="paisAlterado()">
             <option value="belgica">Belgica</option>
             <option value="estados unidos">Estados Unidos</option>
             <option value="mexico">Mexico</option>
@@ -47,8 +52,8 @@
             <option value="holanda">Holanda</option>
         </select>
             
-        <label class="textlabel">Jogador favorito</label>
-        <select class="campotexto" id="jogador_favorito" name="jogador_favorito" required>
+        <label class="selectlabel">Jogador Favorito:</label>
+            <select id="select_jogador" class="select">
             <option value="matt turner">Matt Turner</option>
             <option value="chris brandy">Chris Brandy</option>
             <option value="matt freese">Matt Freese</option>
@@ -81,7 +86,7 @@
         </select>
         </div>
 
-        <button id="enviar" type="submit">Enviar</button>
+    <button id="enviar" type="submit">Enviar</button>
     </form>
     </div>
 

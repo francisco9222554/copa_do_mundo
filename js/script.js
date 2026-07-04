@@ -78,43 +78,164 @@ function retornar_cor3(){
 function retornar_cor4(){
     document.getElementById("haiti").style.color="#ffffff"
 }
-/*
-function mostrarResultado(){
-    const params= new URLSearchParams(window.location.search);
-    const nome= params.get("nome");
-    const email= params.get("email");
-    const senha= params.get("senha");
-    const pais= params.get("pais");
-    const data_nascimento= params.get("data_nascimento")
 
-    const resultadoDiv= document.getElementById("exibir_resultado");
-    resultadoDiv.inderHTML=`<p> nome: $(name)</p><p> email: $(email)</p><p> senha: ${senha}</p>`
-}
-*/
-function getInputs(){
+//resultado
+function getInput() {
     return {
-        nome: document.getElementById('nome'),
-        email: document.getElementById('email'),
-        senha: document.getElementById('senha'),
-        pais: document.getElementById('pais'),
-        data_nascimento: document.getElementById('data_nascimento')
+        nome: document.getElementById("nome"),
+        data_nascimento: document.getElementById("data_nascimento"),
+        email: document.getElementById("email"),
+        pais: document.getElementById("select_pais"),
+        jogador_favorito: document.getElementById("select_jogador")
+    }
+}
+
+function getValores({ nome, data_nascimento, email, pais, jogador_favorito }) {
+    return {
+        nome: nome.value.trim(),
+        data_nascimento: data_nascimento.value.trim(),
+        email: email.value.trim(),
+        pais: pais.value.trim(),
+        jogador_favorito: jogador_favorito.value.trim()
     };
 }
 
-function getValores({nome, email, senha, pais, data_nascimento}){
+document.addEventListener('DOMContentLoaded',function(){
+    const botaoEnviar = document.getElementById("enviar")
+    if(!botaoEnviar){
+        return;
+    }
+
+botaoEnviar.addEventListener('click',function(event){
+    event.preventDefault ();
+    const Inputs = getInput();
+    const dados = getValores(Inputs);
+
+    console.log("Inputs:", Inputs)
+    console.log("dados:", dados)
+    
+   window.location.href = `./resultado.html?nome=${encodeURIComponent(dados.nome)}&data_nascimento=${encodeURIComponent(dados.data_nascimento)}&email=${encodeURIComponent(dados.email)}&pais=${encodeURIComponent(dados.pais)}&jogador_favorito=${encodeURIComponent(dados.jogador_favorito)}`;
+    });
+});
+
+function mostrarResultado() {
+    const params = new URLSearchParams(window.location.search);
+    const nome = params.get("nome");
+    const data_nascimento = params.get("data_nascimento");
+    const email = params.get("email");
+    const pais = params.get("pais");
+    const jogador_favorito = params.get("jogador_favorito");
+
+    const hoje = new Date();
+    const nascimento = new Date(data_nascimento);
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+    const mes = hoje.getMonth() - nascimento.getMonth();
+
+    if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+        idade--;
+    }
+
+    let categoria = "";
+    if (idade <= 16) {
+        categoria = "Torcedor Mirim";
+    } else if (idade <= 30) {
+        categoria = "Torcedor Novato";
+    } else {
+        categoria = "Torcedor Experiente";
+    }
+
+    const resultadoDiv = document.getElementById("exibir_resultado");
+    resultadoDiv.innerHTML = `
+        <p><strong>Nome:</strong> ${nome}</p>
+        <p><strong>Data de Nascimento:</strong> ${data_nascimento}</p>
+        <p><strong>Idade:</strong> ${idade} anos</p>
+        <p><strong>Categoria:</strong> ${categoria}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>País:</strong> ${pais}</p>
+        <p><strong>Jogador Favorito:</strong> ${jogador_favorito}</p>
+    `;
+}
+
+//Cadastro
+function campoSelecionado() {
+    document.getElementById("nome").style.backgroundColor = "#fff9c4";
+    document.getElementById("nome").style.color = "#222";
+}
+
+function campoNormal() {
+    document.getElementById("nome").style.backgroundColor = "";
+    document.getElementById("nome").style.fontWeight = "";
+    document.getElementById("nome").style.color = "";
+}
+
+function digitandoNome() {
+    document.getElementById("nome").style.fontWeight = "bold";
+}
+
+function paisAlterado() {
+    document.getElementById("select_pais").style.backgroundColor = "#d4edda";
+    document.getElementById("select_pais").style.color = "#222";
+}
+
+//Tema escuro
+function alternarTema() {
+    document.body.classList.toggle("dark-mode");
+    const botao = document.getElementById("tema");
+
+    if (document.body.classList.contains("dark-mode")) {
+        localStorage.setItem("tema", "escuro");
+        if (botao) {
+            botao.innerText = "☀️ Tema Claro";
+        }
+    } else {
+        localStorage.setItem("tema", "claro");
+        if (botao) {
+            botao.innerText = "🌙 Tema Escuro";
+        }
+    }
+}
+
+function carregarTema() {
+    const tema = localStorage.getItem("tema");
+    const botao = document.getElementById("tema");
+
+    if (tema === "escuro") {
+        document.body.classList.add("dark-mode");
+        if (botao) {
+            botao.innerText = "☀️ Tema Claro";
+        }
+    } else {
+        document.body.classList.remove("dark-mode");
+        if (botao) {
+            botao.innerText = "🌙 Tema Escuro";
+        }
+    }
+}
+
+// Integração com o banco de dados.
+function getInputs(){
+    return {
+        nome: document.getElementById('nome'),
+        data_nascimento: document.getElementById('data_nascimento'),
+        email: document.getElementById('email'),
+        pais: document.getElementById('select_pais'),
+        select_jogador: document.getElementById('select_jogador')
+    };
+}
+
+function getValores({nome, data_nascimento, email, pais, select_jogador}){
     return {
         nome: nome.value.trim(),
+        data_nascimento: data_nascimento.value.trim(),
         email: email.value.trim(),
-        senha: senha.value.trim(),
         pais: pais.value.trim(),
-        data_nascimento: data_nascimento.value.trim()
+        jogador_favorito: select_jogador.value.trim()
     };
 }
 
 async function cadastrar(){
     const inputs = getInputs();
     const dados = getValores(inputs);
-    
 
     await fetch('/api/usuarios', {
         method: 'POST',
@@ -122,31 +243,34 @@ async function cadastrar(){
         body: JSON.stringify(dados)
     });
 
-    window.location.href = './../pages/resultado.html';
+    window.location.href = '../pages/resultado.html';
 }
 
 function calcularIdade(dataNascimento) {
     const anoHoje = new Date().getFullYear();
     const anoNascimento = new Date(dataNascimento).getFullYear();
     const idade = anoHoje - anoNascimento;
-    
+
     return idade;
 }
 
 async function mostrarResultado(){
-    const resultadoDiv = document.getElementById('resultado');
+    const resultadoDiv = document.getElementById('exibir_resultado');
+    
     const resposta = await fetch('/api/usuarios');
     const usuarios = await resposta.json();
 
     if (usuarios.length === 0) {
-        resultadoDiv.innerHTML = '<p>Nenhum usuário cadastrado ainda.</p>';
+        resultadoDiv.innerHTML = '<p>Nenhum usuario cadastrado ainda.</p>';
         return;
     }
 
-    let html = '<table><thead><tr><th>ID</th><th>Nome</th><th>Email</th><th>Senha</th><th>País</th><th>Data de Nascimento</th><th>Idade</th></tr></thead><tbody>';
+    let html = '<table><thead><tr><th>ID</th><th>Nome</th><th>Email</th><th>País</th><th>Data de Nascimento</th><th>Idade</th><th>Jogador Favorito</th></tr></thead><tbody>';
+    
     for (const usuario of usuarios) {
         const idade = calcularIdade(usuario.data_nascimento);
-        html += `<tr><td>${usuario.id}</td><td>${usuario.nome}</td><td>${usuario.email}</td><td>${usuario.senha}</td><td>${usuario.pais}</td><td>${usuario.data_nascimento}</td><td>${idade}</td></tr>`;
+
+        html += `<tr><td>${usuario.id}</td><td>${usuario.nome}</td><td>${usuario.email}</td><td>${usuario.pais}</td><td>${usuario.data_nascimento}</td><td>${idade}</td><td>${usuario.jogador_favorito}</td></tr>`;
     }
     html += '</tbody></table>';
 
@@ -154,7 +278,7 @@ async function mostrarResultado(){
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const btnEnviar = document.getElementById('btnEnviar');
+    const btnEnviar = document.getElementById('enviar');
     if (btnEnviar) {
         btnEnviar.addEventListener('click', function(event) {
             event.preventDefault();
@@ -162,7 +286,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (document.getElementById('resultado')) {
+    if (document.getElementById('exibir_resultado')) {
         mostrarResultado();
     }
 });

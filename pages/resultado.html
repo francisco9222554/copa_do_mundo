@@ -7,14 +7,18 @@
     <link rel="stylesheet" href="../css/index.css">
     <script src="../js/script.js"></script>
 </head>
-<body>
-    <form action="./../index.html" method="GET">
+<body onload="mostrarResultado(); carregarTema()">
+    <nav>
+        <ul>
+            <li><a href="./../index.html">Página Inicial</a></li>
+            <li><a href="../pages/classificatórias.html">Classificatórias</a></li>
+        </ul>
+    </nav>
 
-    <div class="resultado">
-    <h1>CADASTRO CONCLUÍDO COM SUCESSO!</h1>
-
-    <button id="enviar" type="submit">Continuar</button>
+    <div class="container">
+        <h1 id="titulo_sucesso">Cadastro Realizado com Sucesso!</h1>
+        
+        <div id="exibir_resultado"> </div>
     </div>
-    
 </body>
 </html>

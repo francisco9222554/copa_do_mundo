@@ -5,22 +5,22 @@ const { DatabaseSync } = require('node:sqlite');
 
 const PORTA = 3000;
 
-const db = new DatabaseSync(path.join(__dirname, 'banco.db'));
+const db = new DatabaseSync(path.join(__dirname, 'meubanco.db'));
+
 db.exec(`CREATE TABLE IF NOT EXISTS usuarios (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT,
+    data_nascimento TEXT,
     email TEXT,
-    senha TEXT,
     pais TEXT,
-    data_nascimento TEXT
+    jogador_favorito TEXT
 )`);
 
 const servidor = http.createServer(async (req, res) => {
 
-    const paginaInicial = req.url = '/' ? './../index.html' : req.url;
-
     if (req.url === '/api/usuarios' && req.method === 'GET') {
         const usuarios = db.prepare('SELECT * FROM usuarios ORDER BY id DESC').all();
+        res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(usuarios));
         return;
     }
@@ -29,23 +29,29 @@ const servidor = http.createServer(async (req, res) => {
         let corpo = '';
         for await (const pedaco of req) corpo += pedaco;  
         const dados = JSON.parse(corpo);
-        db.prepare('INSERT INTO usuarios (nome, email, senha, pais, data_nascimento) VALUES (?, ?, ?, ?, ?)')
-          .run(dados.nome, dados.email, dados.senha, dados.pais, dados.data_nascimento);
+        
+        db.prepare("INSERT INTO usuarios (nome, data_nascimento, email, pais, jogador_favorito) VALUES (?, ?, ?, ?, ?)") 
+          .run(dados.nome, dados.data_nascimento, dados.email, dados.pais, dados.jogador_favorito);
+        
         res.end('ok');
         return;
     }
 
-    const nomeArquivo = req.url === '/' ? 'index.html' : req.url;
-
-    if (nomeArquivo.endsWith('.css')) {
+    const paginaInicial = req.url === '/' ? '/index.html' : req.url;
+    
+    if (paginaInicial.endsWith('.css')) {
         res.setHeader('Content-Type', 'text/css');
+    } else if (paginaInicial.endsWith('.js')) {
+        res.setHeader('Content-Type', 'text/javascript');
+    } else if (paginaInicial.match(/\.(png|jpeg|jpg|avif|gif)$/)) {
+        res.setHeader('Content-Type', 'image/*');
     }
 
-    fs.readFile(path.join(__dirname, nomeArquivo), (erro, conteudo) => {
+    fs.readFile(path.join(__dirname, paginaInicial), (erro, conteudo) => {
         res.end(erro ? 'Arquivo não encontrado' : conteudo);
     });
 });
 
-servidor.listen(3000, () => {
-    console.log(`Servidor rodando em http://localhost: 3000`);
+servidor.listen(PORTA, () => {
+    console.log(`Servidor rodando em http://localhost:${PORTA}`);
 });
